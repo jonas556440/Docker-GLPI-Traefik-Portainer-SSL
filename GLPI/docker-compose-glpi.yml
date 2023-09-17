@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  glpi:
+    image: "jonas556440/glpi"
+    container_name: "glpi"
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=glpidb
+      - MYSQL_USER=glpiuser
+      - MYSQL_PASSWORD=123456
+    volumes:
+      - ./glpi_data:/var/www/html/glpi
+    networks:
+      - proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.glpi.rule=Host(`glpi.localhost.local`)
+      - traefik.http.routers.glpi.tls=true
+      - traefik.http.routers.glpi.entrypoints=websecure # definindo o ponto de entrada, que será utilizado pelo serviço
+      - traefik.http.routers.glpi.service=glpi # especificando um serviço para a rota
+      - traefik.http.services.glpi.loadbalancer.server.port=80 # especificando a porta para a qual a solicitação será roteada (no serviço de destino)
+    restart: always
+
+networks:
+  proxy:
+    external: true

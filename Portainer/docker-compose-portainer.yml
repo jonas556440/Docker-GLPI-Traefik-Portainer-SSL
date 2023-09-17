@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  portainer:
+    image: "portainer/portainer"
+    container_name: "portainer"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./port_data:/data
+    networks:
+      - proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.portainer.rule=Host(`portainer.localhost.local`)
+      - traefik.http.routers.portainer.tls=true
+      - traefik.http.routers.portainer.entrypoints=websecure # definindo o ponto de entrada, que será utilizado pelo serviço
+      - traefik.http.routers.portainer.service=portainer # especificando um serviço para a rota
+      - traefik.http.services.portainer.loadbalancer.server.port=9000 # especificando a porta para a qual a solicitação será roteada (no serviço de destino)
+    restart: always
+
+networks:
+  proxy:
+    external: true

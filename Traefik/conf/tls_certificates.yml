@@ -1,0 +1,8 @@
+tls:
+  certificates:
+    - certFile: "/etc/traefik/certs/traefik.localhost.local.crt"
+      keyFile: "/etc/traefik/certs/traefik.localhost.local.key"
+    - certFile: "/etc/traefik/certs/glpi.localhost.local.crt"
+      keyFile: "/etc/traefik/certs/glpi.localhost.local.key"
+    - certFile: "/etc/traefik/certs/portainer.localhost.local.crt"
+      keyFile: "/etc/traefik/certs/portainer.localhost.local.key"

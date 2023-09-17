@@ -1,0 +1,28 @@
+# configure logs
+log:
+  level: ERROR # Defina como 'DEBUG' para solução de problemas
+
+# configure entry points
+entryPoints:
+  web:
+    address: ":80"
+    http:
+      redirections: # redirecionamento http para https
+        entryPoint:
+          to: websecure
+          scheme: https
+  websecure:
+    address: ":443"
+
+# configure providers
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock" # conexão com o daemon docker
+    exposedByDefault: false # ignore recipientes sem rótulo 'traefik.enable=true'
+  file:
+    directory: "/etc/traefik/conf" # diretório para arquivos de configuração dinâmica do traefik
+    watch: true # as alterações são processadas imediatamente
+
+# configurar serviço de API
+api:
+  dashboard: true # ativar o painel do traefik
