@@ -1,7 +1,7 @@
 # Docker-GLPI-Traefik-Portainer-SSL
 
-[![Docker Version](https://img.shields.io/docker/v/my-docker-image.svg?style=flat-square)](https://hub.docker.com/r/my-docker-image)
-[![Build Status](https://img.shields.io/travis/username/my-docker-image/master.svg?style=flat-square)](https://travis-ci.org/username/my-docker-image)
+[![Docker Version](https://img.shields.io/docker/v/my-docker-image.svg?style=flat-square)](https://hub.docker.com/r/jonas556440)
+
 [![Downloads](https://img.shields.io/docker/pulls/my-docker-image.svg?style=flat-square)](https://hub.docker.com/r/jonas556440/glpi)
 
 Este tutorial irá guiá-lo através da configuração de um ambiente Docker com GLPI, usando certificados SSL autoassinados para garantir uma comunicação segura. Vamos dividir isso em vários passos.
