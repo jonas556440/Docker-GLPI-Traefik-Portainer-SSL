@@ -8,7 +8,7 @@
 
 Neste tutorial, você aprenderá como configurar um ambiente local Docker com as seguintes ferramentas:
 
-- **GLPI**: Um sistema de gerenciamento de ativos de código aberto.
+- **GLPI**: Um sistema de gerenciamento de ativos e chamados de código aberto.
 - **Portainer**: Uma interface de gerenciamento de contêineres Docker.
 - **Traefik**: Um proxy reverso com suporte a SSL para roteamento de tráfego.
 
