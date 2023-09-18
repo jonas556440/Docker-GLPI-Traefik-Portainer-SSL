@@ -1,12 +1,27 @@
 # Docker-GLPI-Traefik-Portainer-SSL
 
-[![Docker Version](https://img.shields.io/docker/v/my-docker-image.svg?style=flat-square)](https://hub.docker.com/r/jonas556440)
+[![Docker Hub](https://img.shields.io/docker/v/my-docker-image.svg?style=flat-square)](https://hub.docker.com/r/jonas556440)
 
-[![Downloads](https://img.shields.io/docker/pulls/my-docker-image.svg?style=flat-square)](https://hub.docker.com/r/jonas556440/glpi)
+[![Imagem GLPI](https://img.shields.io/docker/pulls/my-docker-image.svg?style=flat-square)](https://hub.docker.com/r/jonas556440/glpi)
 
-Este tutorial irá guiá-lo através da configuração de um ambiente Docker com GLPI, usando certificados SSL autoassinados para garantir uma comunicação segura. Vamos dividir isso em vários passos.
+# Configurando um Ambiente Local Docker com GLPI, Portainer e Traefik (SSL)
 
-![GLPI](../header.png)
+Neste tutorial, você aprenderá como configurar um ambiente local Docker com as seguintes ferramentas:
+
+- **GLPI**: Um sistema de gerenciamento de ativos de código aberto.
+- **Portainer**: Uma interface de gerenciamento de contêineres Docker.
+- **Traefik**: Um proxy reverso com suporte a SSL para roteamento de tráfego.
+
+<img src="https://glpi-project.org/wp-content/uploads/2022/01/assets-2.png" alt="GLPI" width="600" />
+
+A configuração incluirá a utilização de certificados SSL autoassinados para proteger as conexões HTTPS.
+
+## Requisitos
+
+Para seguir este tutorial, você precisará dos seguintes requisitos:
+
+- Um servidor Ubuntu 22.
+- Acesso ao servidor como superusuário ou com privilégios sudo.
 
 ## Passo 1: Instalando o Docker
 
