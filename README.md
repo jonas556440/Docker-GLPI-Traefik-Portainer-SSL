@@ -11,10 +11,12 @@ Este tutorial irá guiá-lo através da configuração de um ambiente Docker com
 ## Passo 1: Instalando o Docker
 
 Começaremos instalando o Docker e suas dependências. Execute os seguintes comandos:
-
 ```sh
 sudo su -
 cd /
+```
+
+```sh
 sudo apt update
 sudo apt upgrade -y
 sudo add-apt-repository http://us.archive.ubuntu.com/ubuntu jammy-updates multiverse
@@ -61,7 +63,6 @@ Isso criará os diretórios e arquivos necessario em sua pasta root.
 Agora, vamos criar certificados SSL autoassinados para cada subdomínio que você deseja configurar (por exemplo, `glpi.localhost.local`, `portainer.localhost.local`, `traefik.localhost.local`). Siga as instruções interativas e configure os certificados para cada domínio:
 
 ```sh
-cd ~/
 sudo mkdir -p ~/Docker-GLPI-Traefik-Portainer-SSL/Traefik/ssl_certificates
 cd ~/Docker-GLPI-Traefik-Portainer-SSL/Traefik/ssl_certificates
 openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -keyout glpi.localhost.local.key -out glpi.localhost.local.crt
@@ -73,7 +74,6 @@ openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -keyout traefik.localho
 Agora, vamos iniciar os contêineres para as diferentes partes do ambiente. Certifique-se de estar no diretório inicial (~) antes de executar esses comandos:
 
 ```sh
-cd ~/
 cd ~/Docker-GLPI-Traefik-Portainer-SSL
 docker-compose -f Traefik/docker-compose-traefik.yml -f mariadb_glpi/docker-compose-mariadb.yml -f GLPI/docker-compose-glpi.yml -f Portainer/docker-compose-portainer.yml up -d
 ```
