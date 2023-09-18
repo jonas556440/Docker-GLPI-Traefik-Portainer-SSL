@@ -92,8 +92,40 @@ Agora, vamos iniciar os contêineres para as diferentes partes do ambiente. Cert
 cd ~/Docker-GLPI-Traefik-Portainer-SSL
 docker-compose -f Traefik/docker-compose-traefik.yml -f mariadb_glpi/docker-compose-mariadb.yml -f GLPI/docker-compose-glpi.yml -f Portainer/docker-compose-portainer.yml up -d
 ```
+## Passo 7: Aponte os dominios para o IP do servidor
 
-Certifique-se de seguir as instruções interativas e configure os certificados para cada subdomínio, inserindo o nome apropriado no último campo, como `glpi.localhost.local`.
+Certifique-se de que os domínios que você usará com seus certificados SSL autoassinados sejam direcionados para o IP do servidor onde o Docker e seus contêineres estão sendo executados. Isso pode ser feito de duas maneiras:
+
+### Opção 1: Usando um Servidor de DNS Interno
+
+Uma abordagem é configurar um servidor DNS interno em sua rede para resolver os nomes de domínio (por exemplo, glpi.localhost.local, port.localhost.local, traefik.localhost.local) para o IP do servidor onde o Docker está sendo executado.
+
+### Opção 2: Editando o Arquivo /etc/hosts
+
+Outra maneira é adicionar manualmente os mapeamentos de IP e domínio ao arquivo `/etc/hosts` do servidor. Você pode fazer isso executando o seguinte comando:
+
+```bash
+sudo nano /etc/hosts
+```
+
+Dentro do arquivo, adicione linhas semelhantes a esta para cada domínio que você deseja configurar, substituindo `IP_DO_SERVIDOR` pelo endereço IP real do seu servidor onde o Docker está em execução:
+
+```plaintext
+IP_DO_SERVIDOR  glpi.localhost.local
+IP_DO_SERVIDOR  port.localhost.local
+IP_DO_SERVIDOR  traefik.localhost.local
+```
+
+Isso garantirá que os domínios sejam corretamente direcionados para o IP do seu servidor.
+
+## Passo 8: Acessando as Aplicações
+Finalmente, você pode acessar as seguintes aplicações:
+    
+- **GLPI**: https://glpi.localhost.local
+- **Portainer**: https://port.localhost.local
+- **Traefik**: https://traefik.localhost.local
+
+Você verá avisos de segurança devido ao uso de certificados autoassinados. Você pode aceitar esses avisos para continuar.
 
 Este tutorial ajudará você a configurar um ambiente Docker com GLPI e certificados SSL autoassinados para uma comunicação segura entre os serviços. Certifique-se de ajustar os nomes dos certificados e outros detalhes conforme necessário para atender às suas necessidades. Para obter mais informações e configurações avançadas, consulte a [Wiki][wiki]. 
 
