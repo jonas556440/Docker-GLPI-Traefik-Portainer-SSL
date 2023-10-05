@@ -90,7 +90,10 @@ Agora, vamos iniciar os contêineres para as diferentes partes do ambiente. Cert
 
 ```sh
 cd ~/Docker-GLPI-Traefik-Portainer-SSL
-docker-compose -f Traefik/docker-compose-traefik.yml -f mariadb_glpi/docker-compose-mariadb.yml -f GLPI/docker-compose-glpi.yml -f Portainer/docker-compose-portainer.yml up -d
+docker-compose -f Traefik/docker-compose-traefik.yml up -d
+docker-compose -f mariadb_glpi/docker-compose-mariadb.yml up -d
+docker-compose -f GLPI/docker-compose-glpi.yml up -d
+docker-compose -f Portainer/docker-compose-portainer.yml up -d
 ```
 ## Passo 7: Aponte os dominios para o IP do servidor
 
