@@ -1,10 +1,9 @@
-# Docker-GLPI-Traefik-Portainer-SSL
+# 🐳 Docker-GLPI-Traefik-Portainer-SSL
 
-[![Docker Hub](https://img.shields.io/docker/v/my-docker-image.svg?style=flat-square)](https://hub.docker.com/r/jonas556440)
+[![Docker Hub](https://img.shields.io/badge/Docker%20Hub-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://hub.docker.com/)
+[![Tutorial](https://img.shields.io/badge/📚%20Tutorial%20Completo-TecMestre-green?style=for-the-badge)](https://tecmestre.com.br/docker-local-com-glpi-portainer-e-traefik-ssl-autoassinado/)
 
-[![Imagem GLPI](https://img.shields.io/docker/pulls/my-docker-image.svg?style=flat-square)](https://hub.docker.com/r/jonas556440/glpi)
-
-# Configurando um Ambiente Local Docker com GLPI, Portainer e Traefik (SSL)
+## Configurando um Ambiente Local Docker com GLPI, Portainer e Traefik (SSL)
 
 Neste tutorial, você aprenderá como configurar um ambiente local Docker com as seguintes ferramentas:
 
@@ -16,16 +15,21 @@ Neste tutorial, você aprenderá como configurar um ambiente local Docker com as
 
 A configuração incluirá a utilização de certificados SSL autoassinados para proteger as conexões HTTPS.
 
-## Requisitos
+---
+
+## 📋 Requisitos
 
 Para seguir este tutorial, você precisará dos seguintes requisitos:
 
 - Um servidor Ubuntu 22.
 - Acesso ao servidor como superusuário ou com privilégios sudo.
 
+---
+
 ## Passo 1: Instalando o Docker
 
 Começaremos instalando o Docker e suas dependências. Execute os seguintes comandos:
+
 ```sh
 sudo su -
 cd /
@@ -46,6 +50,8 @@ sudo systemctl start docker
 sudo systemctl enable docker
 ```
 
+---
+
 ## Passo 2: Instalando o Docker Compose
 
 Agora, instalaremos o Docker Compose para facilitar a criação e gerenciamento de contêineres. Siga as instruções abaixo:
@@ -56,6 +62,8 @@ sudo chmod +x /usr/local/bin/docker-compose
 sudo docker-compose --version
 ```
 
+---
+
 ## Passo 3: Criar uma Rede para os Contêineres
 
 Crie uma rede Docker chamada `proxy` para permitir a comunicação entre os contêineres Traefik, GLPI e Portainer. Use o seguinte comando:
@@ -64,14 +72,20 @@ Crie uma rede Docker chamada `proxy` para permitir a comunicação entre os cont
 sudo docker network create proxy
 ```
 
-## Passo 4: Clone o Repositorio
+---
+
+## Passo 4: Clone o Repositório
+
 Agora, clone o repositório com os arquivos de configuração necessários para a pasta root raiz de seu servidor Ubuntu:
 
 ```sh
 cd ~/
 git clone https://github.com/jonas556440/Docker-GLPI-Traefik-Portainer-SSL.git
 ```
-Isso criará os diretórios e arquivos necessario em sua pasta root.
+
+Isso criará os diretórios e arquivos necessários em sua pasta root.
+
+---
 
 ## Passo 5: Gerar Certificados SSL Autoassinados
 
@@ -85,7 +99,10 @@ openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -keyout portainer.local
 openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -keyout traefik.localhost.local.key -out traefik.localhost.local.crt
 ```
 
+---
+
 ## Passo 6: Iniciando os Contêineres
+
 Agora, vamos iniciar os contêineres para as diferentes partes do ambiente. Certifique-se de estar no diretório inicial (~) antes de executar esses comandos:
 
 ```sh
@@ -95,7 +112,10 @@ docker-compose -f mariadb_glpi/docker-compose-mariadb.yml up -d
 docker-compose -f GLPI/docker-compose-glpi.yml up -d
 docker-compose -f Portainer/docker-compose-portainer.yml up -d
 ```
-## Passo 7: Aponte os dominios para o IP do servidor
+
+---
+
+## Passo 7: Aponte os domínios para o IP do servidor
 
 Certifique-se de que os domínios que você usará com seus certificados SSL autoassinados sejam direcionados para o IP do servidor onde o Docker e seus contêineres estão sendo executados. Isso pode ser feito de duas maneiras:
 
@@ -121,25 +141,92 @@ IP_DO_SERVIDOR  traefik.localhost.local
 
 Isso garantirá que os domínios sejam corretamente direcionados para o IP do seu servidor.
 
+---
+
 ## Passo 8: Acessando as Aplicações
+
 Finalmente, você pode acessar as seguintes aplicações:
-    
-- **GLPI**: https://glpi.localhost.local
-- **Portainer**: https://port.localhost.local
-- **Traefik**: https://traefik.localhost.local
+
+| Serviço | URL | Usuário Padrão |
+|---------|-----|----------------|
+| **GLPI** | https://glpi.localhost.local | glpi / glpi |
+| **Portainer** | https://port.localhost.local | Criar no primeiro acesso |
+| **Traefik** | https://traefik.localhost.local | - |
 
 Você verá avisos de segurança devido ao uso de certificados autoassinados. Você pode aceitar esses avisos para continuar.
 
-Este tutorial ajudará você a configurar um ambiente Docker com GLPI e certificados SSL autoassinados para uma comunicação segura entre os serviços. Certifique-se de ajustar os nomes dos certificados e outros detalhes conforme necessário para atender às suas necessidades. Para obter mais informações e configurações avançadas, consulte a [Wiki][wiki]. 
+---
 
+## 🐛 Troubleshooting
 
-Este projeto é distribuído sob a licença XYZ. Consulte o arquivo `LICENSE` para obter mais informações.
+| Problema | Solução |
+|----------|---------|
+| Erro de conexão SSL | Verifique se os certificados foram gerados corretamente |
+| GLPI não conecta ao banco | Aguarde 30 segundos para o MariaDB iniciar |
+| Porta 443 em uso | Pare outros serviços: `sudo systemctl stop apache2 nginx` |
+| Container não inicia | Verifique logs: `docker logs nome_container` |
 
-**Jonas Oliveira** – jonas556440@gmail.com
+---
 
-[npm-image]: https://img.shields.io/npm/v/datadog-metrics.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/datadog-metrics
-[npm-downloads]: https://img.shields.io/npm/dm/datadog-metrics.svg?style=flat-square
-[travis-image]: https://img.shields.io/travis/dbader/node-datadog-metrics/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/dbader/node-datadog-metrics
-[wiki]: https://github.com/seunome/seuprojeto/wiki
+## 📚 Tutorial Completo em Português
+
+Para um guia **mais detalhado** com screenshots, troubleshooting avançado e dicas de produção:
+
+### 🔗 [GLPI com Docker: Como Instalar com Portainer e SSL - TecMestre](https://tecmestre.com.br/docker-local-com-glpi-portainer-e-traefik-ssl-autoassinado/)
+
+O tutorial completo inclui:
+
+- ✅ Passo a passo com imagens detalhadas
+- ✅ Solução de problemas comuns
+- ✅ Configurações avançadas de segurança
+- ✅ Dicas para ambiente de produção
+- ✅ Backup e restauração do GLPI
+
+---
+
+## 🛠️ Outros Projetos Relacionados
+
+| Projeto | Descrição |
+|---------|-----------|
+| [Backup VMs Proxmox](https://github.com/jonas556440/backup-vm-proxmox) | Scripts de backup automatizado para Proxmox |
+| [Calculadora de Rede](https://github.com/jonas556440/JONAS-CALCULADORA-DE-REDE) | Calculadora de sub-redes online |
+| [Painel de Operações](https://github.com/jonas556440/painel-operacoes) | Dashboard para operações de TI |
+
+---
+
+## 👨‍💻 Autor
+
+**Jonas Oliveira** - Especialista em Infraestrutura de TI
+
+| | |
+|---|---|
+| 🌐 Blog | [TecMestre.com.br](https://tecmestre.com.br) |
+| 📧 Email | jonas556440@gmail.com |
+| 🐙 GitHub | [@jonas556440](https://github.com/jonas556440) |
+
+> 💡 No [TecMestre](https://tecmestre.com.br) você encontra tutoriais sobre Docker, Bacula Enterprise, Redes, Windows Server e muito mais!
+
+---
+
+## ⭐ Apoie o Projeto
+
+Se este projeto te ajudou, considere:
+
+- ⭐ Dar uma estrela no repositório
+- 🔀 Fazer um fork e contribuir
+- 📢 Compartilhar com colegas de TI
+- 📖 Ler mais tutoriais no [TecMestre](https://tecmestre.com.br)
+
+---
+
+## 📄 Licença
+
+Este projeto é distribuído sob a licença MIT. Consulte o arquivo [LICENSE](LICENSE) para mais informações.
+
+---
+
+<p align="center">
+  <a href="https://tecmestre.com.br">
+    <img src="https://img.shields.io/badge/Mais%20Tutoriais-TecMestre.com.br-blue?style=for-the-badge" alt="TecMestre">
+  </a>
+</p>
